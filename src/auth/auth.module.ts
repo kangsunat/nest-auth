@@ -10,10 +10,11 @@ import { JwtModule } from '@nestjs/jwt';
     UserModule,
     PassportModule,
     JwtModule.register({
-      secret: 'jangan pakai kode rahasia ini 123 !@#!@#',
+      secret: process.env.SECRET_KEY,
       signOptions: { expiresIn: '10s' },
     }),
   ],
   providers: [AuthService, LocalStrategy],
+  exports: [AuthService],
 })
 export class AuthModule {}
