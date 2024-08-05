@@ -7,7 +7,8 @@ export class AuthService {
   constructor(private jwtService: JwtService) {}
 
   private readonly fakeUser = [
-    { id: 1, username: 'nama username', password: 'pass1' },
+    { id: 1, username: 'username1', password: 'pass1' },
+    { id: 2, username: 'username2', password: 'pass2' },
   ];
 
   validateUser(body: LoginDto) {
@@ -20,6 +21,6 @@ export class AuthService {
       return this.jwtService.sign(result);
     }
 
-    throw new UnauthorizedException();
+    return null;
   }
 }
