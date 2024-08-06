@@ -7,21 +7,21 @@ export class AuthService {
   constructor(private jwtService: JwtService) {}
 
   private readonly users = [
-    { id: 1, username: 'username1', password: 'pass1' },
-    { id: 2, username: 'username2', password: 'pass2' },
-    { id: 3, username: 'username3', password: 'pass3' },
+    { id: 1, username: 'username1', password: 'pass1', role: 'role 1' },
+    { id: 2, username: 'username2', password: 'pass2', role: 'role 2' },
+    { id: 3, username: 'username3', password: 'pass3', role: 'role 3' },
   ];
-  validateUser(payload: LoginDto) {
-    const findUser = this.users.find(
-      (user) => user.username === payload.username,
-    );
+  async validateUser({ username, password }: LoginDto): Promise<any> {
+    const findUser = this.users.find((user) => user.username === username);
 
-    if (findUser && findUser.password === payload.password) {
+    console.log('authservice validate user : ', {
+      findUser,
+      payload: { password, username },
+    });
+
+    if (findUser && findUser.password === password) {
       const { password, ...result } = findUser;
-      console.log('needs :', result, process.env.SECRET_KEY);
-
-      const accessToken = this.jwtService.sign(result);
-      return accessToken;
+      return this.jwtService.sign(result);
     }
 
     return null;
