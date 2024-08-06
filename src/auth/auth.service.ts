@@ -14,11 +14,6 @@ export class AuthService {
   async validateUser({ username, password }: LoginDto): Promise<any> {
     const findUser = this.users.find((user) => user.username === username);
 
-    console.log('authservice validate user : ', {
-      findUser,
-      payload: { password, username },
-    });
-
     if (findUser && findUser.password === password) {
       const { password, ...result } = findUser;
       return this.jwtService.sign(result);
